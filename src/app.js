@@ -1,5 +1,10 @@
 import { Tokenizer } from './tokenizer.js'
 
-const tokenizer = new Tokenizer()
+const grammar = { // End token ska finnas i tokenizer!
+  "Word": /^[\w|åäöÅÄÖ]+/,
+  "Dot": /^\./
+}
 
-console.log(tokenizer.test())
+const wordAndDotGrammar = new Tokenizer(grammar)
+
+wordAndDotGrammar.startTokenizer('Meningen består av ord.')
