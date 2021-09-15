@@ -8,6 +8,19 @@ export class Tokenizer {
   startTokenizer(string) {
     this.string = string
     console.log(this.grammar)
+    this.findTokens()
+  }
+
+  findAllTokens() {
+    while (this.string.length > 0) {
+      this.findOneToken()
+    }
+  }
+
+  findOneToken() {
+    for (const key in this.grammar) {
+      // Testa alla token typer
+    }
   }
 }
 
