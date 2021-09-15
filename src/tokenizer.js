@@ -8,19 +8,42 @@ export class Tokenizer {
   startTokenizer(string) {
     this.string = string
     console.log(this.grammar)
-    this.findTokens()
+    this.findAllTokens()
   }
 
   findAllTokens() {
-    while (this.string.length > 0) {
-      this.findOneToken()
-    }
+    // while (this.string.length > 0) {
+      const token = this.findOneToken()
+      console.log('token: ' + token)
+    // }
   }
 
   findOneToken() {
+    let possibleToken = []
     for (const key in this.grammar) {
-      // Testa alla token typer
+      const testTokenType = this.testIfTokenMatch(key)
+      if(testTokenType !== null) {
+        possibleToken.push(testTokenType[0]) // Add matched token.
+      }
     }
+    console.log(possibleToken)
+    return this.findBestMatchingToken(possibleToken)
+  }
+
+  testIfTokenMatch(key) {
+    console.log(key)
+    console.log(this.string.match(this.grammar[key]))
+    return this.string.match(this.grammar[key])
+  }
+
+  findBestMatchingToken(possibleToken) {
+    let bestMatchingToken = ''
+    for (let i = 0; i < possibleToken.length; i++) {
+      if (possibleToken[i].length > bestMatchingToken.length) {
+        bestMatchingToken = possibleToken[i]
+      }
+    }
+    return bestMatchingToken
   }
 }
 
