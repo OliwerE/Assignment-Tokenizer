@@ -12,10 +12,16 @@ export class Tokenizer {
   }
 
   findAllTokens() {
-    // while (this.string.length > 0) {
+    while (this.string.length > 0) {
       const token = this.findOneToken()
-      console.log('token: ' + token)
-    // }
+      this.tokens.push(token)
+      console.log('tokens: ')
+      console.log(this.tokens)
+      console.log('Sträng innan tagit bort token:' + this.string)
+      this.removeTokenFromString(token)
+      console.log('Sträng efter tagit bort token:' + this.string)
+    }
+    console.log('END')
   }
 
   findOneToken() {
@@ -44,6 +50,10 @@ export class Tokenizer {
       }
     }
     return bestMatchingToken
+  }
+
+  removeTokenFromString(token) {
+    this.string = this.string.split(token).pop().trim()
   }
 }
 
