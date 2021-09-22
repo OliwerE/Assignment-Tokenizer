@@ -53,7 +53,7 @@ export class Tokenizer {
   }
 
   getNextToken() {
-    const currentIndex = this.tokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
+    const currentIndex = this.getCurrentTokenIndex()
     console.log(currentIndex)
     if (currentIndex === -1 || currentIndex >= this.tokens.length - 1) {
       // ERROR!
@@ -64,7 +64,19 @@ export class Tokenizer {
     }
   }
 
+  getCurrentTokenIndex() {
+    return this.tokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
+  }
+
   getPrevToken() {
+    const currentIndex = this.getCurrentTokenIndex()
+    console.log(currentIndex)
+    if (currentIndex === 0) {
+      // view last token
+    } else {
+      this.setActiveToken(this.tokens[currentIndex - 1])
+      this.handleActiveToken()
+    }
 
   }
 
