@@ -73,7 +73,7 @@ export class Tokenizer {
     const currentIndex = this.getCurrentTokenIndex()
     if (currentIndex === -1) {
       throw new Error('Active token is not a token!')
-    } else if (currentToken === 0) {
+    } else if (currentIndex === 0) {
       this.setActiveToken(this.tokens[this.tokens.length - 1])
       this.handleActiveToken()
     } else {
