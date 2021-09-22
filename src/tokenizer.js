@@ -54,10 +54,11 @@ export class Tokenizer {
 
   getNextToken() {
     const currentIndex = this.getCurrentTokenIndex()
-    console.log(currentIndex)
-    if (currentIndex === -1 || currentIndex >= this.tokens.length - 1) {
-      // ERROR!
-      console.log('error!') // FIXA!
+    if (currentIndex === -1) { // current token existerar inte i this.tokens
+      throw new Error('Active token is not a token!')
+    } else if (currentIndex >= this.tokens.length - 1) { // Visa första eller error??
+      this.setActiveToken(this.tokens[0])
+      this.handleActiveToken()
     } else {
       this.setActiveToken(this.tokens[currentIndex + 1])
       this.handleActiveToken()
@@ -70,14 +71,15 @@ export class Tokenizer {
 
   getPrevToken() {
     const currentIndex = this.getCurrentTokenIndex()
-    console.log(currentIndex)
-    if (currentIndex === 0) {
-      // view last token
+    if (currentIndex === -1) {
+      throw new Error('Active token is not a token!')
+    } else if (currentToken === 0) {
+      this.setActiveToken(this.tokens[this.tokens.length - 1])
+      this.handleActiveToken()
     } else {
       this.setActiveToken(this.tokens[currentIndex - 1])
       this.handleActiveToken()
     }
-
   }
 
   setActiveToken(token) {
