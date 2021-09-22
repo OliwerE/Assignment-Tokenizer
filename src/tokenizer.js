@@ -8,6 +8,8 @@ export class Tokenizer {
   startTokenizer(string) {
     this.string = string
     this.findAllTokens()
+    console.log(this.tokens)
+    // this.setupActiveToken()
   }
 
   findAllTokens() { // Lägg till end token i slutet
@@ -16,16 +18,22 @@ export class Tokenizer {
       this.tokens.push(token)
       this.removeTokenFromString(token.value)
     }
-    console.log('Ska vara 0: ' + this.string.length)
-    console.log(this.tokens)
-    console.log('END')
+    this.createEndToken()
   }
 
-  findOneToken() { // Hantera lexikalfel
+  createEndToken() {
+    const endToken = {
+      tokenType: 'END',
+      value: ''
+    }
+    this.tokens.push(endToken)
+  }
+
+  findOneToken() { // Hantera lexikalfel, OLIKA NIVÅER AV ABSTRAKTION!
     let possibleTokens = []
     for (const key in this.grammar) {
       const testTokenType = this.testIfTokenMatch(key)
-      if(testTokenType.value !== null) {
+      if(testTokenType.value !== null) { // NÄSTLAD I FOR LOOP DÅLIGT ÄNDRA!
         possibleTokens.push(testTokenType) // Add matched token.
       }
     }
