@@ -19,7 +19,7 @@ const aGrammar = { // End token ska finnas i tokenizer!
 
 const arithmeticGrammar = new Tokenizer(aGrammar)
 
-arithmeticGrammar.startTokenizer('3 + 2')
+// arithmeticGrammar.startTokenizer('3 + 2')
 
 
 /*

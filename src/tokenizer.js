@@ -1,15 +1,62 @@
+import readline from 'readline'
+
 export class Tokenizer {
   constructor(grammar) {
     this.grammar = grammar
     this.string = ''
     this.tokens = []
+    this.activeToken
+    this.inputReader = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      terminal: false
+    })
     
   }
   startTokenizer(string) {
     this.string = string
     this.findAllTokens()
-    console.log(this.tokens)
-    // this.setupActiveToken()
+    this.startTokenUI()
+  }
+
+  startTokenUI() {
+    this.setupActiveToken()
+    this.handleActiveToken()
+  }
+
+  async handleActiveToken() {
+    this.renderToken()
+    this.readUserInput()
+    // console.log(value)
+  }
+
+  async readUserInput() {
+    this.inputReader.question('Change token (next/prev/exit): ', function (value) {
+      this.handleUserInput(value)
+      // this.inputReader.close()
+    }.bind(this))
+  }
+
+  handleUserInput(value) {
+    if (value === 'next') {
+
+    } else if (value === 'prev') {
+
+    } else if (value === 'exit') {
+      this.inputReader.close()
+      console.log('Closes application...')
+    } else {
+      console.log(value + ' is not an alternative!')
+      this.readUserInput()
+    }
+  }
+
+  setupActiveToken() {
+    this.activeToken = this.tokens[0]
+  }
+
+  renderToken() {
+    console.log(`Tokentyp: ${this.activeToken.tokenType}\nVärde: ${this.activeToken.value}`)
   }
 
   findAllTokens() { // Lägg till end token i slutet
