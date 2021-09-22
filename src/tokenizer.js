@@ -33,15 +33,16 @@ export class Tokenizer {
   async readUserInput() {
     this.inputReader.question('Change token (next/prev/exit): ', function (value) {
       this.handleUserInput(value)
-      // this.inputReader.close()
     }.bind(this))
   }
 
   handleUserInput(value) {
     if (value === 'next') {
-
+      const token = this.getNextToken()
+      // this.setToken(token)
     } else if (value === 'prev') {
-
+      const token = this.getPrevToken()
+      // this.setToken(token)
     } else if (value === 'exit') {
       this.inputReader.close()
       console.log('Closes application...')
@@ -51,8 +52,28 @@ export class Tokenizer {
     }
   }
 
+  getNextToken() {
+    const currentIndex = this.tokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
+    console.log(currentIndex)
+    if (currentIndex === -1 || currentIndex >= this.tokens.length - 1) {
+      // ERROR!
+      console.log('error!') // FIXA!
+    } else {
+      this.setActiveToken(this.tokens[currentIndex + 1])
+      this.handleActiveToken()
+    }
+  }
+
+  getPrevToken() {
+
+  }
+
+  setActiveToken(token) {
+    this.activeToken = token
+  }
+
   setupActiveToken() {
-    this.activeToken = this.tokens[0]
+    this.setActiveToken(this.tokens[0])
   }
 
   renderToken() {
