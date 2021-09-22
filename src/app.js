@@ -1,5 +1,4 @@
 import { Tokenizer } from './tokenizer.js'
-// import readline from 'readline' // for UI
 
 const wGrammar = { // End token ska finnas i tokenizer!
   "WORD": /^[\w|åäöÅÄÖ]+/,
@@ -8,7 +7,7 @@ const wGrammar = { // End token ska finnas i tokenizer!
 
 const wordAndDotGrammar = new Tokenizer(wGrammar)
 
-wordAndDotGrammar.startTokenizer('Meningen består av ord.')
+// wordAndDotGrammar.startTokenizer('Meningen består av ord.')
 
 
 const aGrammar = { // End token ska finnas i tokenizer!
@@ -19,18 +18,4 @@ const aGrammar = { // End token ska finnas i tokenizer!
 
 const arithmeticGrammar = new Tokenizer(aGrammar)
 
-// arithmeticGrammar.startTokenizer('3 + 2')
-
-
-/*
-// UI test
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
-
-rl.question('Whats your name? ', function (name) {
-  console.log('Hi! ' + name)
-  rl.close()
-})
-*/
+arithmeticGrammar.startTokenizer('3 + hej 2')

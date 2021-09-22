@@ -14,9 +14,34 @@ export class Tokenizer {
     
   }
   startTokenizer(string) {
+    try {
     this.string = string
     this.findAllTokens()
     this.startTokenUI()
+    } catch (err) {
+      this.handleError(err)
+    }
+  }
+
+  handleError(err) {
+    if (err.message === 'lexikalfel') {
+      this.createLexicalErrorToken()
+      this.startTokenUI()
+    } else if (err.message === 'Active token is not a token!') {
+      console.log(err.message)
+      this.closeTokenizer()
+    } else {
+      console.log(err.message)
+      this.closeTokenizer()
+    }
+  }
+
+  createLexicalErrorToken() {
+    const token = {
+      tokenType: 'Lexikalfel',
+      value: `No lexical element matches "${this.string}"`
+    }
+    this.tokens.push(token)
   }
 
   startTokenUI() {
@@ -44,12 +69,16 @@ export class Tokenizer {
       const token = this.getPrevToken()
       // this.setToken(token)
     } else if (value === 'exit') {
-      this.inputReader.close()
-      console.log('Closes application...')
+      this.closeTokenizer()
     } else {
       console.log(value + ' is not an alternative!')
       this.readUserInput()
     }
+  }
+
+  closeTokenizer() {
+    this.inputReader.close()
+    console.log('Closes application...')
   }
 
   getNextToken() {
@@ -91,6 +120,7 @@ export class Tokenizer {
   }
 
   renderToken() {
+    console.clear()
     console.log(`Tokentyp: ${this.activeToken.tokenType}\nVärde: ${this.activeToken.value}`)
   }
 
@@ -131,13 +161,21 @@ export class Tokenizer {
   }
 
   findBestMatchingToken(possibleTokens) {
+    // console.log(possibleTokens)
     let bestMatchingToken = ''
     for (let i = 0; i < possibleTokens.length; i++) {
       if (possibleTokens[i].value.length > bestMatchingToken.length) {
         bestMatchingToken = possibleTokens[i]
       }
     }
-    return bestMatchingToken
+
+
+    // FLYTTA METOD GÖR FÖR MKT!
+    if (bestMatchingToken === '') {
+      throw new Error('lexikalfel')
+    } else {
+      return bestMatchingToken
+    }
   }
 
   removeTokenFromString(token) {
