@@ -6,11 +6,6 @@ export class Tokenizer {
     this.string = ''
     this.tokens = []
     this.activeToken
-    // this.inputReader = readline.createInterface({
-    //   input: process.stdin,
-    //   output: process.stdout,
-    //   terminal: false
-    // })
     
   }
   startTokenizer(string) {
@@ -51,10 +46,10 @@ export class Tokenizer {
       throw new Error('Active token is not a token!')
     } else if (currentIndex >= this.tokens.length - 1) { // Visa första eller error??
       this.setActiveToken(this.tokens[0])
-      this.handleActiveToken()
+      return this.activeToken
     } else {
       this.setActiveToken(this.tokens[currentIndex + 1])
-      this.handleActiveToken()
+      return this.activeToken
     }
   }
 
@@ -68,15 +63,19 @@ export class Tokenizer {
       throw new Error('Active token is not a token!')
     } else if (currentIndex === 0) {
       this.setActiveToken(this.tokens[this.tokens.length - 1])
-      this.handleActiveToken()
+      return this.activeToken
     } else {
       this.setActiveToken(this.tokens[currentIndex - 1])
-      this.handleActiveToken()
+      return this.activeToken
     }
   }
 
   setActiveToken(token) {
     this.activeToken = token
+  }
+
+  getActiveToken() {
+    return this.activeToken
   }
 
   setupActiveToken() {

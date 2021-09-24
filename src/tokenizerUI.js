@@ -37,30 +37,22 @@ export class TokenizerUserInterface {
 
   handleActiveToken() {
     this.renderToken()
-    this.readUserInput()
+    this.readUserInput('Change token (next/prev/exit):')
     // console.log(value)
-  }
-
-  readUserInput() {
-    this.inputReader.question('Change token (next/prev/exit): ', function (value) {
-      this.handleUserInput(value)
-    }.bind(this))
   }
 
   handleUserInput(value) {
     if (value === 'next') {
-
-      // GET NEXT TOKEN
-
+      this.tokenizer.getNextToken()
+      this.handleActiveToken()
     } else if (value === 'prev') {
-
-      // GET PREV TOKEN!
-
+      this.tokenizer.getPrevToken()
+      this.handleActiveToken()
     } else if (value === 'exit') {
       this.closeTokenizer()
     } else {
       console.log(value + ' is not an alternative!')
-      this.readUserInput()
+      this.readUserInput('Change token (next/prev/exit):')
     }
   }
 
@@ -70,9 +62,9 @@ export class TokenizerUserInterface {
   }
 
   renderToken() {
+    const token = this.tokenizer.getActiveToken()
     console.clear()
-    // console.log(`Tokentyp: ${this.activeToken.tokenType}\nVärde: ${this.activeToken.value}`)
-    console.log('"en token"')
+    console.log(`Tokentyp: ${token.tokenType}\nVärde: ${token.value}`)
   }
 
 }
