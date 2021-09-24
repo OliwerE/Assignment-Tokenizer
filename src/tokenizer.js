@@ -6,18 +6,19 @@ export class Tokenizer {
     this.string = ''
     this.tokens = []
     this.activeToken
-    this.inputReader = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-      terminal: false
-    })
+    // this.inputReader = readline.createInterface({
+    //   input: process.stdin,
+    //   output: process.stdout,
+    //   terminal: false
+    // })
     
   }
   startTokenizer(string) {
     try {
     this.string = string
     this.findAllTokens()
-    this.startTokenUI()
+    this.setupActiveToken()
+    return
     } catch (err) {
       this.handleError(err)
     }
@@ -26,13 +27,16 @@ export class Tokenizer {
   handleError(err) {
     if (err.message === 'lexikalfel') {
       this.createLexicalErrorToken()
-      this.startTokenUI()
+      this.setupActiveToken()
     } else if (err.message === 'Active token is not a token!') {
       console.log(err.message)
-      this.closeTokenizer()
+
+      // CLOSE APP!!!
     } else {
       console.log(err.message)
-      this.closeTokenizer()
+
+      // CLOSE APP!!!
+
     }
   }
 
@@ -42,43 +46,6 @@ export class Tokenizer {
       value: `No lexical element matches "${this.string}"`
     }
     this.tokens.push(token)
-  }
-
-  startTokenUI() {
-    this.setupActiveToken()
-    this.handleActiveToken()
-  }
-
-  async handleActiveToken() {
-    this.renderToken()
-    this.readUserInput()
-    // console.log(value)
-  }
-
-  async readUserInput() {
-    this.inputReader.question('Change token (next/prev/exit): ', function (value) {
-      this.handleUserInput(value)
-    }.bind(this))
-  }
-
-  handleUserInput(value) {
-    if (value === 'next') {
-      const token = this.getNextToken()
-      // this.setToken(token)
-    } else if (value === 'prev') {
-      const token = this.getPrevToken()
-      // this.setToken(token)
-    } else if (value === 'exit') {
-      this.closeTokenizer()
-    } else {
-      console.log(value + ' is not an alternative!')
-      this.readUserInput()
-    }
-  }
-
-  closeTokenizer() {
-    this.inputReader.close()
-    console.log('Closes application...')
   }
 
   getNextToken() {
@@ -119,11 +86,6 @@ export class Tokenizer {
     this.setActiveToken(this.tokens[0])
   }
 
-  renderToken() {
-    console.clear()
-    console.log(`Tokentyp: ${this.activeToken.tokenType}\nVärde: ${this.activeToken.value}`)
-  }
-
   findAllTokens() { // Lägg till end token i slutet
     while (this.string.length > 0) {
       const token = this.findOneToken()
@@ -161,14 +123,12 @@ export class Tokenizer {
   }
 
   findBestMatchingToken(possibleTokens) {
-    // console.log(possibleTokens)
     let bestMatchingToken = ''
     for (let i = 0; i < possibleTokens.length; i++) {
       if (possibleTokens[i].value.length > bestMatchingToken.length) {
         bestMatchingToken = possibleTokens[i]
       }
     }
-
 
     // FLYTTA METOD GÖR FÖR MKT!
     if (bestMatchingToken === '') {
