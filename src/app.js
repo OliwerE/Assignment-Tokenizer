@@ -1,4 +1,5 @@
 import { Tokenizer } from './tokenizer.js'
+import { TokenizerUserInterface } from './tokenizerUI.js'
 
 const wGrammar = { // End token ska finnas i tokenizer!
   "WORD": /^[\w|åäöÅÄÖ]+/,
@@ -18,4 +19,7 @@ const aGrammar = { // End token ska finnas i tokenizer!
 
 const arithmeticGrammar = new Tokenizer(aGrammar)
 
-arithmeticGrammar.startTokenizer('3 + hej 2')
+// arithmeticGrammar.startTokenizer('3 + hej 2')
+
+const ui = new TokenizerUserInterface(aGrammar, '3 + hej 2')
+ui.start()
