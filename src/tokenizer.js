@@ -30,13 +30,10 @@ export class Tokenizer {
       this.setupActiveToken()
     } else if (err.message === 'Active token is not a token!') {
       console.log(err.message)
-
-      // CLOSE APP!!!
+      process.exit(1)
     } else {
       console.log(err.message)
-
-      // CLOSE APP!!!
-
+      process.exit(1)
     }
   }
 
