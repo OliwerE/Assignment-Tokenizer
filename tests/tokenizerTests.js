@@ -200,8 +200,7 @@ const tc16 = () => {
   arithmeticTokenizer.getNextToken()
   arithmeticTokenizer.getNextToken()
   arithmeticTokenizer.getNextToken()
-  console.log(arithmeticTokenizer.tokens)
-  if (arithmeticTokenizer.getActiveToken().value === '+"' && arithmeticTokenizer.getActiveToken().tokenType === 'ADD') {
+  if (arithmeticTokenizer.getActiveToken().value === '+' && arithmeticTokenizer.getActiveToken().tokenType === 'ADD') {
     console.log('TC16: PASS')
   } else {
     console.log('TC16: FAIL, expected value: "+" got: ' + arithmeticTokenizer.getActiveToken().value + ' expected token type: "ADD" got: ' + arithmeticTokenizer.getActiveToken().tokenType)

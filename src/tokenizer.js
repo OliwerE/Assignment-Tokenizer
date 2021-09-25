@@ -134,7 +134,8 @@ export class Tokenizer {
     }
   }
 
-  removeTokenFromString(token) {
-    this.string = this.string.split(token).pop().trim()
+  removeTokenFromString(tokenValue) {
+    this.string = this.string.substring(tokenValue.length, this.string.length).trim()
+    // this.string = this.string.substring(this.string.indexOf(token) + 1).trim() // båda skapar olika fel! Old solution: this.string.split(token).pop().trim()
   }
 }
