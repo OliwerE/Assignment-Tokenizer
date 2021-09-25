@@ -1,7 +1,7 @@
 import { Tokenizer } from "./tokenizer.js"
 import readline from 'readline'
 
-export class TokenizerUserInterface {
+export class TokenizerUI {
   constructor(grammar, string) {
     this.tokenizer = new Tokenizer(grammar)
     this.string = string

@@ -1,25 +1,10 @@
-import { Tokenizer } from './tokenizer.js'
-import { TokenizerUserInterface } from './tokenizerUI.js'
-
-const wGrammar = { // End token ska finnas i tokenizer!
-  "WORD": /^[\w|åäöÅÄÖ]+/,
-  "DOT": /^\./
-}
-
-const wordAndDotGrammar = new Tokenizer(wGrammar)
-
-// wordAndDotGrammar.startTokenizer('Meningen består av ord.')
+import { TokenizerUI } from './tokenizerUI.js'
+import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
+import { arithmeticGrammar } from './grammars/arithmeticGrammar.js'
 
 
-const aGrammar = { // End token ska finnas i tokenizer!
-  "NUMBER": /^[0-9]+(\.([0-9])+)?/,
-  "ADD": /^[+]/,
-  "MUL": /^[*]/ 
-}
+// const tokenizer = new TokenizerUI(arithmeticGrammar, '3 + hej 2')
+// tokenizer.start()
 
-const arithmeticGrammar = new Tokenizer(aGrammar)
-
-// arithmeticGrammar.startTokenizer('3 + hej 2')
-
-const ui = new TokenizerUserInterface(aGrammar, '3 + hej 2')
-ui.start()
+const tokenizer2 = new TokenizerUI(wordAndDotGrammar, 'Meningen består av ord.')
+tokenizer2.start()
