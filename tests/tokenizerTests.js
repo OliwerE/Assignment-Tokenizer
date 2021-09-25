@@ -178,4 +178,35 @@ const tc14 = () => {
 }
 tc14()
 
+const tc15 = () => {
+  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
+  arithmeticTokenizer.startTokenizer('3+5 # 4')
+  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.getNextToken()
+  if (arithmeticTokenizer.getActiveToken().value === 'No lexical element matches "# 4"' && arithmeticTokenizer.getActiveToken().tokenType === 'Lexikalfel') {
+    console.log('TC15: PASS')
+  } else {
+    console.log('TC15: FAIL, expected value: "No lexical element matches "# 4"" got: ' + arithmeticTokenizer.getActiveToken().value + ' expected token type: "Lexikalfel" got: ' + arithmeticTokenizer.getActiveToken().tokenType)
+  }
+}
+tc15()
+
+const tc16 = () => {
+  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
+  arithmeticTokenizer.startTokenizer('3.0+54.1     + 4.2')
+  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.getPrevToken()
+  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.getNextToken()
+  console.log(arithmeticTokenizer.tokens)
+  if (arithmeticTokenizer.getActiveToken().value === '+"' && arithmeticTokenizer.getActiveToken().tokenType === 'ADD') {
+    console.log('TC16: PASS')
+  } else {
+    console.log('TC16: FAIL, expected value: "+" got: ' + arithmeticTokenizer.getActiveToken().value + ' expected token type: "ADD" got: ' + arithmeticTokenizer.getActiveToken().tokenType)
+  }
+}
+tc16()
+
 
