@@ -10,7 +10,7 @@ export class Tokenizer {
   }
   startTokenizer(string) {
     try {
-    this.string = string
+    this.string = string.trim()
     this.findAllTokens()
     this.setupActiveToken()
     return
