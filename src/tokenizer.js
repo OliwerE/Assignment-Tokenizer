@@ -27,7 +27,7 @@ export class Tokenizer {
     this.string = this.string.trim()
   }
 
-  findAllTokens() { // Lägg till end token i slutet
+  findAllTokens() {
     while (this.string.length > 0) {
       const token = this.matchAllTokenTypes()
       this.addToken(token)
@@ -51,7 +51,7 @@ export class Tokenizer {
     this.potentialTokens = []
   }
 
-  getTokenTypeMatchString(key) { // OTYDLIGT NAMN, FALSK INFO
+  getTokenTypeMatchString(key) {
     const matchTest = this.string.match(this.grammar[key])
     if (matchTest === null) {
       return ''
@@ -76,7 +76,7 @@ export class Tokenizer {
 
   addIfPotentialToken(token) {
     if(token.value !== null) {
-        this.potentialTokens.push(token) // Add matched token.
+        this.potentialTokens.push(token)
     }
   }
 
