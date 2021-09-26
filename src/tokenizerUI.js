@@ -2,28 +2,25 @@ import { Tokenizer } from "./tokenizer.js"
 import readline from 'readline'
 
 export class TokenizerUI {
-  constructor(grammar, string) {
+  constructor(grammar) {
     this.tokenizer = new Tokenizer(grammar)
-    this.string = string
+    this.string
     this.inputReader = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
       terminal: false
     })
+    this.isRequestingStringFromUser = true
   }
 
   start() {
-    // this.getString()
-    this.tokenizer.startTokenizer(this.string) // Fixa så att tokenizer blir färdig innan startTokenUI
-    console.log('tokenizer has loaded!')
-    this.startTokenUI()
+    this.getString()
   }
-/*
+
   getString() {
-    const test = this.readUserInput('Enter string')
-    console.log(test)
+    this.readUserInput('Enter string:')
   }
-*/
+
   readUserInput(question) {
     this.inputReader.question(`${question} `, (value) => {
       this.handleUserInput(value)
@@ -42,6 +39,29 @@ export class TokenizerUI {
   }
 
   handleUserInput(value) {
+    if (this.isRequestingStringFromUser === true) {
+      this.setString(value)
+      this.setIsRequestStringFromUser(false)
+      this.setupTokenizer()
+      this.startTokenUI()
+    } else {
+      this.handleNavigationInput(value)
+    }
+  }
+
+  setString(value) {
+    this.string = value
+  }
+
+  setIsRequestStringFromUser(value) {
+    this.isRequestingStringFromUser = value
+  }
+
+  setupTokenizer() {
+    this.tokenizer.startTokenizer(this.string)
+  }
+
+  handleNavigationInput(value) {
     if (value === 'next') {
       this.tokenizer.getNextToken()
       this.handleActiveToken()
