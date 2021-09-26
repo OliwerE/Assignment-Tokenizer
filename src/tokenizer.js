@@ -1,5 +1,3 @@
-import readline from 'readline'
-
 export class Tokenizer {
   constructor(grammar) {
     this.grammar = grammar
@@ -10,13 +8,22 @@ export class Tokenizer {
   }
   startTokenizer(string) {
     try {
-    this.string = string.trim()
-    this.findAllTokens()
-    this.setupActiveToken()
+      this.setString(string)
+      this.trimCurrentString()
+      this.findAllTokens()
+      this.setupActiveToken()
     return
     } catch (err) {
       this.handleError(err)
     }
+  }
+
+  setString(string) {
+    this.string = string
+  }
+
+  trimCurrentString() {
+    this.string = this.string.trim()
   }
 
   handleError(err) {
