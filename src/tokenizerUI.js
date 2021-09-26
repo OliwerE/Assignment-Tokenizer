@@ -27,17 +27,6 @@ export class TokenizerUI {
     })
   }
 
-  startTokenUI() {
-    // this.setupActiveToken()
-    this.handleActiveToken()
-  }
-
-  handleActiveToken() {
-    this.renderToken()
-    this.readUserInput('Change token (next/prev/exit):')
-    // console.log(value)
-  }
-
   handleUserInput(value) {
     if (this.isRequestingStringFromUser === true) {
       this.setString(value)
@@ -61,6 +50,10 @@ export class TokenizerUI {
     this.tokenizer.startTokenizer(this.string)
   }
 
+  startTokenUI() {
+    this.handleActiveToken()
+  }
+
   handleNavigationInput(value) {
     if (value === 'next') {
       this.tokenizer.getNextToken()
@@ -71,9 +64,14 @@ export class TokenizerUI {
     } else if (value === 'exit') {
       this.closeTokenizer()
     } else {
-      console.log(value + ' is not an alternative!')
+      this.renderWrongInputError(value)
       this.readUserInput('Change token (next/prev/exit):')
     }
+  }
+
+  handleActiveToken() {
+    this.renderToken(this.tokenizer.getActiveToken())
+    this.readUserInput('Change token (next/prev/exit):')
   }
 
   closeTokenizer() {
@@ -81,8 +79,11 @@ export class TokenizerUI {
     console.log('Closes application...')
   }
 
-  renderToken() {
-    const token = this.tokenizer.getActiveToken()
+  renderWrongInputError(value) {
+    console.log(value + ' is not an alternative!')
+  }
+
+  renderToken(token) {
     console.clear()
     console.log(`Tokentyp: ${token.tokenType}\nVärde: ${token.value}`)
   }
