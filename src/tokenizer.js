@@ -41,7 +41,7 @@ export class Tokenizer {
     this.resetPotentialTokens()
     for (const key in this.grammar) {
       const token = this.matchTokenType(key)
-      this.addPossibleToken(token)
+      this.addIfPotentialToken(token)
     }
     return this.bestTokenMatch(this.potentialTokens)
   }
@@ -58,7 +58,7 @@ export class Tokenizer {
     }
   }
 
-  addPossibleToken(token) {
+  addIfPotentialToken(token) {
     if(token.value !== null) { // NÄSTLAD I FOR LOOP DÅLIGT ÄNDRA!
         this.potentialTokens.push(token) // Add matched token.
     }
