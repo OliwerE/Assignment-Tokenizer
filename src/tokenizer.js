@@ -13,7 +13,6 @@ export class Tokenizer {
       this.trimCurrentString()
       this.findAllTokens()
       this.setupActiveToken()
-    return
     } catch (err) {
       this.handleError(err)
     }
@@ -29,7 +28,7 @@ export class Tokenizer {
 
   findAllTokens() {
     while (this.string.length > 0) {
-      const token = this.matchAllTokenTypes()
+      const token = this.matchAllTokenTypes() // dåligt matchar alla OCH returnerar bästa token!
       this.addToken(token)
       this.removeTokenFromString(token.value)
       this.trimCurrentString()
