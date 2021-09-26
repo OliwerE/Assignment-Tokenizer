@@ -126,7 +126,8 @@ export class Tokenizer {
 
   handleError(err) {
     if (err.message === 'Lexical Error') {
-      this.createLexicalErrorToken()
+      const token = this.createLexicalErrorToken()
+      this.addToken(token)
       this.setupActiveToken()
     } else {
       console.log(err.message)
@@ -135,11 +136,10 @@ export class Tokenizer {
   }
 
   createLexicalErrorToken() {
-    const token = {
+    return {
       tokenType: 'Lexical Error',
       value: `No lexical element matches "${this.string}"`
     }
-    this.addToken(token)
   }
 
   getNextToken() {
