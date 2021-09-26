@@ -2,7 +2,8 @@ export class Tokenizer {
   constructor(grammar) {
     this.grammar = grammar
     this.string = ''
-    this.tokens = []
+    this.potentialTokens = []
+    this.tokenizerResultTokens = []
     this.activeToken
     
   }
@@ -28,26 +29,28 @@ export class Tokenizer {
 
   findAllTokens() { // Lägg till end token i slutet
     while (this.string.length > 0) {
-      const token = this.findOneToken()
-      this.tokens.push(token)
+      const token = this.matchAllTokenTypes()
+      this.addToken(token)
       this.removeTokenFromString(token.value)
       this.trimCurrentString()
     }
-    this.createEndToken()
+    this.addEndToken()
   }
 
-  findOneToken() { // Hantera lexikalfel, OLIKA NIVÅER AV ABSTRAKTION!
-    let possibleTokens = []
+  matchAllTokenTypes() {
+    this.resetPotentialTokens()
     for (const key in this.grammar) {
-      const testTokenType = this.testIfTokenMatch(key)
-      if(testTokenType.value !== null) { // NÄSTLAD I FOR LOOP DÅLIGT ÄNDRA!
-        possibleTokens.push(testTokenType) // Add matched token.
-      }
+      const token = this.matchTokenType(key)
+      this.addPossibleToken(token)
     }
-    return this.findBestMatchingToken(possibleTokens)
+    return this.bestTokenMatch(this.potentialTokens)
   }
 
-  testIfTokenMatch(key) {
+  resetPotentialTokens() {
+    this.potentialTokens = []
+  }
+
+  matchTokenType(key) {
     const matchTest = this.string.match(this.grammar[key])
     return {
       tokenType: key,
@@ -55,20 +58,38 @@ export class Tokenizer {
     }
   }
 
-  findBestMatchingToken(possibleTokens) {
-    let bestMatchingToken = ''
-    for (let i = 0; i < possibleTokens.length; i++) {
-      if (possibleTokens[i].value.length > bestMatchingToken.length) {
-        bestMatchingToken = possibleTokens[i]
-      }
+  addPossibleToken(token) {
+    if(token.value !== null) { // NÄSTLAD I FOR LOOP DÅLIGT ÄNDRA!
+        this.potentialTokens.push(token) // Add matched token.
     }
+  }
 
-    // FLYTTA METOD GÖR FÖR MKT!
-    if (bestMatchingToken === '') {
-      throw new Error('lexikalfel')
-    } else {
-      return bestMatchingToken
+  bestTokenMatch(potentialTokens) {
+    let bestMatchingToken = {
+      tokenType: null,
+      value: ''
     }
+    for (let i = 0; i < potentialTokens.length; i++) {
+      bestMatchingToken = this.findBetterTokenMatch(potentialTokens[i], bestMatchingToken)
+    }
+    this.handleLexicalError(bestMatchingToken)
+    return bestMatchingToken
+  }
+
+  findBetterTokenMatch(alternativeToken, bestMatchingToken) {
+    if (alternativeToken.value.length > bestMatchingToken.value.length) {
+        return alternativeToken
+    }
+  }
+
+  handleLexicalError(token) {
+    if (token.tokenType === null && token.value === '') {
+      throw new Error('lexikalfel')
+    }
+  }
+
+  addToken(token) {
+    this.tokenizerResultTokens.push(token)
   }
 
   removeTokenFromString(tokenValue) {
@@ -76,16 +97,16 @@ export class Tokenizer {
     // this.string = this.string.substring(this.string.indexOf(token) + 1).trim() // båda skapar olika fel! Old solution: this.string.split(token).pop().trim()
   }
 
-  createEndToken() {
+  addEndToken() {
     const endToken = {
       tokenType: 'END',
       value: ''
     }
-    this.tokens.push(endToken)
+    this.tokenizerResultTokens.push(endToken)
   }
 
   setupActiveToken() {
-    this.setActiveToken(this.tokens[0])
+    this.setActiveToken(this.tokenizerResultTokens[0])
   }
 
   handleError(err) {
@@ -106,18 +127,18 @@ export class Tokenizer {
       tokenType: 'Lexikalfel',
       value: `No lexical element matches "${this.string}"`
     }
-    this.tokens.push(token)
+    this.tokenizerResultTokens.push(token)
   }
 
   getNextToken() {
     const currentIndex = this.getCurrentTokenIndex()
     if (currentIndex === -1) { // current token existerar inte i this.tokens
       throw new Error('Active token is not a token!')
-    } else if (currentIndex >= this.tokens.length - 1) { // Visa första eller error??
-      this.setActiveToken(this.tokens[0])
+    } else if (currentIndex >= this.tokenizerResultTokens.length - 1) { // Visa första eller error??
+      this.setActiveToken(this.tokenizerResultTokens[0])
       return this.activeToken
     } else {
-      this.setActiveToken(this.tokens[currentIndex + 1])
+      this.setActiveToken(this.tokenizerResultTokens[currentIndex + 1])
       return this.activeToken
     }
   }
@@ -127,16 +148,16 @@ export class Tokenizer {
     if (currentIndex === -1) {
       throw new Error('Active token is not a token!')
     } else if (currentIndex === 0) {
-      this.setActiveToken(this.tokens[this.tokens.length - 1])
+      this.setActiveToken(this.tokenizerResultTokens[this.tokenizerResultTokens.length - 1])
       return this.activeToken
     } else {
-      this.setActiveToken(this.tokens[currentIndex - 1])
+      this.setActiveToken(this.tokenizerResultTokens[currentIndex - 1])
       return this.activeToken
     }
   }
 
   getCurrentTokenIndex() {
-    return this.tokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
+    return this.tokenizerResultTokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
   }
 
   setActiveToken(token) {
