@@ -129,15 +129,14 @@ const tc10 = () => {
 }
 tc10()
 
-// Ska det vara lexikalfel? förväntat är Exception i listan!!
 const tc11 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('!')
   wordAndDotTokenizer.getPrevToken()
-  if (wordAndDotTokenizer.getActiveToken().value === 'No lexical element matches "!"' && wordAndDotTokenizer.getActiveToken().tokenType === 'Lexikalfel') {
+  if (wordAndDotTokenizer.getActiveToken().value === 'No lexical element matches "!"' && wordAndDotTokenizer.getActiveToken().tokenType === 'Lexical Error') {
     console.log('TC11: PASS')
   } else {
-    console.log('TC11: FAIL, expected value: "No lexical element matches "!"" got: ' + wordAndDotTokenizer.getActiveToken().value + ' expected token type: "Lexikalfel" got: ' + wordAndDotTokenizer.getActiveToken().tokenType)
+    console.log('TC11: FAIL, expected value: "No lexical element matches "!"" got: ' + wordAndDotTokenizer.getActiveToken().value + ' expected token type: "Lexical Error" got: ' + wordAndDotTokenizer.getActiveToken().tokenType)
   }
 }
 tc11()
@@ -184,10 +183,10 @@ const tc15 = () => {
   arithmeticTokenizer.getNextToken()
   arithmeticTokenizer.getNextToken()
   arithmeticTokenizer.getNextToken()
-  if (arithmeticTokenizer.getActiveToken().value === 'No lexical element matches "# 4"' && arithmeticTokenizer.getActiveToken().tokenType === 'Lexikalfel') {
+  if (arithmeticTokenizer.getActiveToken().value === 'No lexical element matches "# 4"' && arithmeticTokenizer.getActiveToken().tokenType === 'Lexical Error') {
     console.log('TC15: PASS')
   } else {
-    console.log('TC15: FAIL, expected value: "No lexical element matches "# 4"" got: ' + arithmeticTokenizer.getActiveToken().value + ' expected token type: "Lexikalfel" got: ' + arithmeticTokenizer.getActiveToken().tokenType)
+    console.log('TC15: FAIL, expected value: "No lexical element matches "# 4"" got: ' + arithmeticTokenizer.getActiveToken().value + ' expected token type: "Lexical Error" got: ' + arithmeticTokenizer.getActiveToken().tokenType)
   }
 }
 tc15()

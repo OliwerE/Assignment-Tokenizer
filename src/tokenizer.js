@@ -34,13 +34,14 @@ export class Tokenizer {
       this.removeTokenFromString(token.value)
       this.trimCurrentString()
     }
-    this.addEndToken()
+    this.createEndToken()
   }
 
   matchAllTokenTypes() {
     this.resetPotentialTokens()
     for (const key in this.grammar) {
-      const token = this.matchTokenType(key)
+      const matchString = this.getTokenTypeMatchString(key)
+      const token = this.getTokenTypeMatchObject(key, matchString)
       this.addIfPotentialToken(token)
     }
     return this.bestTokenMatch(this.potentialTokens)
@@ -50,16 +51,31 @@ export class Tokenizer {
     this.potentialTokens = []
   }
 
-  matchTokenType(key) {
+  getTokenTypeMatchString(key) { // OTYDLIGT NAMN, FALSK INFO
     const matchTest = this.string.match(this.grammar[key])
-    return {
-      tokenType: key,
-      value: (matchTest === null ? null : matchTest[0])
+    if (matchTest === null) {
+      return ''
+    } else {
+      return matchTest[0]
+    }
+  }
+
+  getTokenTypeMatchObject(key, matchString) {
+    if (matchString === '') {
+      return {
+        tokenType: key,
+        value: null
+      }      
+    } else {
+      return {
+        tokenType: key,
+        value: matchString
+      }
     }
   }
 
   addIfPotentialToken(token) {
-    if(token.value !== null) { // NÄSTLAD I FOR LOOP DÅLIGT ÄNDRA!
+    if(token.value !== null) {
         this.potentialTokens.push(token) // Add matched token.
     }
   }
@@ -78,13 +94,13 @@ export class Tokenizer {
 
   findBetterTokenMatch(alternativeToken, bestMatchingToken) {
     if (alternativeToken.value.length > bestMatchingToken.value.length) {
-        return alternativeToken
+      return alternativeToken
     }
   }
 
   handleLexicalError(token) {
     if (token.tokenType === null && token.value === '') {
-      throw new Error('lexikalfel')
+      throw new Error('Lexical Error')
     }
   }
 
@@ -94,15 +110,14 @@ export class Tokenizer {
 
   removeTokenFromString(tokenValue) {
     this.string = this.string.substring(tokenValue.length, this.string.length)
-    // this.string = this.string.substring(this.string.indexOf(token) + 1).trim() // båda skapar olika fel! Old solution: this.string.split(token).pop().trim()
   }
 
-  addEndToken() {
+  createEndToken() {
     const endToken = {
       tokenType: 'END',
       value: ''
     }
-    this.tokenizerResultTokens.push(endToken)
+    this.addToken(endToken)
   }
 
   setupActiveToken() {
@@ -110,12 +125,9 @@ export class Tokenizer {
   }
 
   handleError(err) {
-    if (err.message === 'lexikalfel') {
+    if (err.message === 'Lexical Error') {
       this.createLexicalErrorToken()
       this.setupActiveToken()
-    } else if (err.message === 'Active token is not a token!') {
-      console.log(err.message)
-      process.exit(1)
     } else {
       console.log(err.message)
       process.exit(1)
@@ -124,17 +136,15 @@ export class Tokenizer {
 
   createLexicalErrorToken() {
     const token = {
-      tokenType: 'Lexikalfel',
+      tokenType: 'Lexical Error',
       value: `No lexical element matches "${this.string}"`
     }
-    this.tokenizerResultTokens.push(token)
+    this.addToken(token)
   }
 
   getNextToken() {
     const currentIndex = this.getCurrentTokenIndex()
-    if (currentIndex === -1) { // current token existerar inte i this.tokens
-      throw new Error('Active token is not a token!')
-    } else if (currentIndex >= this.tokenizerResultTokens.length - 1) { // Visa första eller error??
+    if (currentIndex >= this.tokenizerResultTokens.length - 1) {
       this.setActiveToken(this.tokenizerResultTokens[0])
       return this.activeToken
     } else {
@@ -145,9 +155,7 @@ export class Tokenizer {
 
   getPrevToken() {
     const currentIndex = this.getCurrentTokenIndex()
-    if (currentIndex === -1) {
-      throw new Error('Active token is not a token!')
-    } else if (currentIndex === 0) {
+    if (currentIndex === 0) {
       this.setActiveToken(this.tokenizerResultTokens[this.tokenizerResultTokens.length - 1])
       return this.activeToken
     } else {
@@ -157,7 +165,7 @@ export class Tokenizer {
   }
 
   getCurrentTokenIndex() {
-    return this.tokenizerResultTokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
+    return this.tokenizerResultTokens.findIndex(token => token.tokenType === this.activeToken.tokenType && token.value === this.activeToken.value)
   }
 
   setActiveToken(token) {
