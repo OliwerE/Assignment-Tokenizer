@@ -26,84 +26,14 @@ export class Tokenizer {
     this.string = this.string.trim()
   }
 
-  handleError(err) {
-    if (err.message === 'lexikalfel') {
-      this.createLexicalErrorToken()
-      this.setupActiveToken()
-    } else if (err.message === 'Active token is not a token!') {
-      console.log(err.message)
-      process.exit(1)
-    } else {
-      console.log(err.message)
-      process.exit(1)
-    }
-  }
-
-  createLexicalErrorToken() {
-    const token = {
-      tokenType: 'Lexikalfel',
-      value: `No lexical element matches "${this.string}"`
-    }
-    this.tokens.push(token)
-  }
-
-  getNextToken() {
-    const currentIndex = this.getCurrentTokenIndex()
-    if (currentIndex === -1) { // current token existerar inte i this.tokens
-      throw new Error('Active token is not a token!')
-    } else if (currentIndex >= this.tokens.length - 1) { // Visa första eller error??
-      this.setActiveToken(this.tokens[0])
-      return this.activeToken
-    } else {
-      this.setActiveToken(this.tokens[currentIndex + 1])
-      return this.activeToken
-    }
-  }
-
-  getCurrentTokenIndex() {
-    return this.tokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
-  }
-
-  getPrevToken() {
-    const currentIndex = this.getCurrentTokenIndex()
-    if (currentIndex === -1) {
-      throw new Error('Active token is not a token!')
-    } else if (currentIndex === 0) {
-      this.setActiveToken(this.tokens[this.tokens.length - 1])
-      return this.activeToken
-    } else {
-      this.setActiveToken(this.tokens[currentIndex - 1])
-      return this.activeToken
-    }
-  }
-
-  setActiveToken(token) {
-    this.activeToken = token
-  }
-
-  getActiveToken() {
-    return this.activeToken
-  }
-
-  setupActiveToken() {
-    this.setActiveToken(this.tokens[0])
-  }
-
   findAllTokens() { // Lägg till end token i slutet
     while (this.string.length > 0) {
       const token = this.findOneToken()
       this.tokens.push(token)
       this.removeTokenFromString(token.value)
+      this.trimCurrentString()
     }
     this.createEndToken()
-  }
-
-  createEndToken() {
-    const endToken = {
-      tokenType: 'END',
-      value: ''
-    }
-    this.tokens.push(endToken)
   }
 
   findOneToken() { // Hantera lexikalfel, OLIKA NIVÅER AV ABSTRAKTION!
@@ -142,7 +72,78 @@ export class Tokenizer {
   }
 
   removeTokenFromString(tokenValue) {
-    this.string = this.string.substring(tokenValue.length, this.string.length).trim()
+    this.string = this.string.substring(tokenValue.length, this.string.length)
     // this.string = this.string.substring(this.string.indexOf(token) + 1).trim() // båda skapar olika fel! Old solution: this.string.split(token).pop().trim()
+  }
+
+  createEndToken() {
+    const endToken = {
+      tokenType: 'END',
+      value: ''
+    }
+    this.tokens.push(endToken)
+  }
+
+  setupActiveToken() {
+    this.setActiveToken(this.tokens[0])
+  }
+
+  handleError(err) {
+    if (err.message === 'lexikalfel') {
+      this.createLexicalErrorToken()
+      this.setupActiveToken()
+    } else if (err.message === 'Active token is not a token!') {
+      console.log(err.message)
+      process.exit(1)
+    } else {
+      console.log(err.message)
+      process.exit(1)
+    }
+  }
+
+  createLexicalErrorToken() {
+    const token = {
+      tokenType: 'Lexikalfel',
+      value: `No lexical element matches "${this.string}"`
+    }
+    this.tokens.push(token)
+  }
+
+  getNextToken() {
+    const currentIndex = this.getCurrentTokenIndex()
+    if (currentIndex === -1) { // current token existerar inte i this.tokens
+      throw new Error('Active token is not a token!')
+    } else if (currentIndex >= this.tokens.length - 1) { // Visa första eller error??
+      this.setActiveToken(this.tokens[0])
+      return this.activeToken
+    } else {
+      this.setActiveToken(this.tokens[currentIndex + 1])
+      return this.activeToken
+    }
+  }
+
+  getPrevToken() {
+    const currentIndex = this.getCurrentTokenIndex()
+    if (currentIndex === -1) {
+      throw new Error('Active token is not a token!')
+    } else if (currentIndex === 0) {
+      this.setActiveToken(this.tokens[this.tokens.length - 1])
+      return this.activeToken
+    } else {
+      this.setActiveToken(this.tokens[currentIndex - 1])
+      return this.activeToken
+    }
+  }
+
+  getCurrentTokenIndex() {
+    return this.tokens.findIndex(t => t.tokenType === this.activeToken.tokenType && t.value === this.activeToken.value)
+  }
+
+  setActiveToken(token) {
+    this.activeToken = token
+  }
+
+  getActiveToken() {
+    return this.activeToken
   }
 }
