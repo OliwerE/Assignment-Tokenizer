@@ -108,7 +108,7 @@ ui.start()
 * Skriv prev och tryck enter för att ändra till förra token:
 
 ![Ange sträng](./img/prev1.PNG)
-* Förra strängen visas:
+* Förra token visas:
 
 ![Ange sträng](./img/loaded.PNG)
 * Skriv exit och tryck enter för att stänga applikationen:
