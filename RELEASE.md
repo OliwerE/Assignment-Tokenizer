@@ -14,7 +14,7 @@
     - [x] Koden är förberedd på Återanvändning
     - [x] All kod samt historik finns i git 
     - [x] Kodkvaliterskraven är ifyllda
-    - [ ] Reflektion är skriven
+    - [x] Reflektion är skriven
   - [ ] Jag eftersträvar med denna inlämning högre betyg (C-B) och anser mig uppfylla alla extra krav för detta. 
     - [ ] Samtliga testfall är skrivna
     - [ ] Egna testfall för Maximal munch och kantfall
@@ -102,3 +102,4 @@ Lista de enskilda testfallen. En rad per testfall.
 
 ## Laborationsreflektion
 <!-- Reflektera över uppgiften utifrån ett kodkvalitetsperspektiv. Använd begrepp ifrån boken.  -->
+Uppgiften följer bokens krav för kodkvalitet, men vissa delar av koden skulle kunna förbättras. Boken nämner att block innanför if, else och while satser bara ska vara en rad. I flera av mina metoder (getNextToken, getPrevToken, handleError och createAllTokens) är blocken många rader. Detta skulle kunna förbättras genom att skapa separata metoder för varje block. T.ex. i createAllTokens skulle varje iteration kunna anropa metoden createToken. Blocken i getPrevToken och getNextToken skulle kunna anropa en metod som ändrar token och returnerar det. I handleError skulle if blocket kunna brytas ut till en egen metod för att minska mängden kod i metoden. De flesta metoderna har inte blandade abstraktionsnivåer. Detta beror på att man inte ska ha olika abstraktionsnivåer i en metod. I getBestTokenMatch och createEndToken skapas objekt i samma metod som andra anropas. En bättre lösning hade varit att skapa en metod med en lägre abstraktionsnivå som som skapar alla token objekt. Boken beskriver att sidoeffekter uppstår när exempelvis en metod gör något som inte beskrivs. I uppgiften förekommer en sidoeffekt i getNextToken och getPrevToken, eftersom dessa metoder utöver att returnera ett token även ändrar vilket token som är aktivt i Tokenizer. Den bästa lösningen hade varit att ha två metoder, men det skulle göra klassen svårare att använda för andra. Eftersom det i så fall skulle behöva göra två anrop för att ändra token. En bättre lösning hade varit att förtydliga att även aktivt token ändras i metodnamnet.
