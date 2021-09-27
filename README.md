@@ -2,7 +2,7 @@
 
 ## Instruktioner
 
-## Skapa gramamtik
+## Skapa grammatik
 * Skapa en javascript fil (grammatiknamn.js) i /src/grammars
 * Skapa ett objekt som exporteras:
 ```javascript
