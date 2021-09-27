@@ -85,11 +85,19 @@ Lista de enskilda testfallen. En rad per testfall.
 | Namn och förklaring  | Reflektion                                   |
 | -------------------  | ---------------------------------------------|
 |                      |                                              |
+|                      |                                              |
+|                      |                                              |
+|                      |                                              |
+|                      |                                              |
 
 ### Funktioner
 
 | Metodnamn och förklaring  | Reflektion                                   |
 | -------------------  | ---------------------------------------------|
+|                      |                                              |
+|                      |                                              |
+|                      |                                              |
+|                      |                                              |
 |                      |                                              |
 
 ## Laborationsreflektion

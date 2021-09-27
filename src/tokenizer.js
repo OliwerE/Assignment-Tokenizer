@@ -11,7 +11,7 @@ export class Tokenizer {
     try {
       this.setString(string)
       this.trimCurrentString()
-      this.findAllTokens()
+      this.getAllTokens()
       this.setupActiveToken()
     } catch (err) {
       this.handleError(err)
@@ -26,9 +26,10 @@ export class Tokenizer {
     this.string = this.string.trim()
   }
 
-  findAllTokens() {
+  getAllTokens() {
     while (this.string.length > 0) {
-      const token = this.matchAllTokenTypes() // dåligt matchar alla OCH returnerar bästa token!
+      this.matchAllTokenTypes()
+      const token = this.bestTokenMatch()
       this.addToken(token)
       this.removeTokenFromString(token.value)
       this.trimCurrentString()
@@ -43,7 +44,6 @@ export class Tokenizer {
       const token = this.getTokenTypeMatchObject(key, matchString)
       this.addIfPotentialToken(token)
     }
-    return this.bestTokenMatch(this.potentialTokens)
   }
 
   resetPotentialTokens() {
@@ -79,13 +79,13 @@ export class Tokenizer {
     }
   }
 
-  bestTokenMatch(potentialTokens) {
+  bestTokenMatch() {
     let bestMatchingToken = {
       tokenType: null,
       value: ''
     }
-    for (let i = 0; i < potentialTokens.length; i++) {
-      bestMatchingToken = this.findBetterTokenMatch(potentialTokens[i], bestMatchingToken)
+    for (let i = 0; i < this.potentialTokens.length; i++) {
+      bestMatchingToken = this.findBetterTokenMatch(this.potentialTokens[i], bestMatchingToken)
     }
     this.handleLexicalError(bestMatchingToken)
     return bestMatchingToken
