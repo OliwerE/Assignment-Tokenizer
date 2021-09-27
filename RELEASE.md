@@ -27,7 +27,7 @@ Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser.
 
 ## Återanvändning
 <!-- Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din tokenizer. Om du skrivit instruktioner för din användare länka till dessa. Om inte beskriv här hur någon skall göra för att använda din kod med sin egen grammatik.  -->
-Koden har anpassats för återanvändning genom att Tokenizer klassen inte har några beroende till någon av mina andra klasser. Tokenizerns enda uppgift är att tokenizera strängen enligt en grammatik och en textsträng. Alla tokens kan sedan hämtas från Tokenizer genom att gå fram och tillbaks med getNextToken, getPrevToken och getActiveToken. Instruktioner hur man använder tokeniseraren finns i [README.md](./RELEASE.md)
+Koden har anpassats för återanvändning genom att Tokenizer klassen inte har några beroende till någon av mina andra klasser. Tokenizerns enda uppgift är att tokenizera strängen enligt en grammatik och en textsträng. Alla tokens kan sedan hämtas från Tokenizer genom att gå fram och tillbaks med getNextToken, getPrevToken och getActiveToken. Instruktioner hur man använder tokeniseraren finns i [README.md](./README.md)
 
 ## Beskrivning av min kod
 <!-- Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild.  -->
