@@ -92,28 +92,28 @@ ui.start()
 ```
 * Ange sträng visas i terminalen:
 
-![Ange sträng](./img/enter-string.png)
+![Ange sträng](./img/enter-string.PNG)
 * Ange sträng och tryck enter:
 
-![Ange sträng](./img/enter-string2.png)
+![Ange sträng](./img/enter-string2.PNG)
 * Första aktiva strängen visas:
 
-![Ange sträng](./img/loaded.png)
+![Ange sträng](./img/loaded.PNG)
 * Skriv next och tryck enter för att ändra till nästa token:
 
-![Ange sträng](./img/next1.png)
+![Ange sträng](./img/next1.PNG)
 * Nästa token visas:
 
-![Ange sträng](./img/next2.png)
+![Ange sträng](./img/next2.PNG)
 * Skriv prev och tryck enter för att ändra till förra token:
 
-![Ange sträng](./img/prev1.png)
+![Ange sträng](./img/prev1.PNG)
 * Förra strängen visas:
 
-![Ange sträng](./img/loaded.png)
+![Ange sträng](./img/loaded.PNG)
 * Skriv exit och tryck enter för att stänga applikationen:
 
-![Ange sträng](./img/exit1.png)
+![Ange sträng](./img/exit1.PNG)
 * Appliationen stängs:
 
-![Ange sträng](./img/exit2.png)
+![Ange sträng](./img/exit2.PNG)
