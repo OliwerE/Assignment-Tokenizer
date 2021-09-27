@@ -11,7 +11,7 @@ export class Tokenizer {
     try {
       this.setString(string)
       this.trimCurrentString()
-      this.getAllTokens()
+      this.createAllTokens()
       this.setupActiveToken()
     } catch (err) {
       this.handleError(err)
@@ -26,10 +26,10 @@ export class Tokenizer {
     this.string = this.string.trim()
   }
 
-  getAllTokens() {
+  createAllTokens() {
     while (this.string.length > 0) {
       this.matchAllTokenTypes()
-      const token = this.bestTokenMatch()
+      const token = this.getBestTokenMatch()
       this.addToken(token)
       this.removeTokenFromString(token.value)
       this.trimCurrentString()
@@ -41,7 +41,7 @@ export class Tokenizer {
     this.resetPotentialTokens()
     for (const key in this.grammar) {
       const matchString = this.getTokenTypeMatchString(key)
-      const token = this.getTokenTypeMatchObject(key, matchString)
+      const token = this.createTokenTypeMatchObject(key, matchString)
       this.addIfPotentialToken(token)
     }
   }
@@ -59,7 +59,7 @@ export class Tokenizer {
     }
   }
 
-  getTokenTypeMatchObject(key, matchString) {
+  createTokenTypeMatchObject(key, matchString) {
     if (matchString === '') {
       return {
         tokenType: key,
@@ -79,7 +79,7 @@ export class Tokenizer {
     }
   }
 
-  bestTokenMatch() {
+  getBestTokenMatch() {
     let bestMatchingToken = {
       tokenType: null,
       value: ''

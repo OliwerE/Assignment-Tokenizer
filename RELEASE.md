@@ -13,14 +13,14 @@
     - [x] De flesta testfall fungerar
     - [x] Koden är förberedd på Återanvändning
     - [x] All kod samt historik finns i git 
-    - [ ] Kodkvaliterskraven är ifyllda
+    - [x] Kodkvaliterskraven är ifyllda
     - [ ] Reflektion är skriven
   - [ ] Jag eftersträvar med denna inlämning högre betyg (C-B) och anser mig uppfylla alla extra krav för detta. 
     - [ ] Samtliga testfall är skrivna
     - [ ] Egna testfall för Maximal munch och kantfall
     - [x] Testfall är automatiserade
     - [x] Det finns en tydlig beskrivning i hur modulen skall användas (i git)
-    - [ ] Kodkvalitetskraven är varierade 
+    - [x] Kodkvalitetskraven är varierade 
   - [ ] Jag eftersträvar med denna inlämning högsta betyg (A) 
 
 Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser. 
@@ -78,27 +78,27 @@ Lista de enskilda testfallen. En rad per testfall.
 
 ## Kodkvalitetskrav
 
-**Fetmarkera** de "regler" som används ur CC. Ni kan frångå tabellformat om ni vill. Skapa direktlänkar till er kod där det är lämpligt. 
+<!-- **Fetmarkera** de "regler" som används ur CC. Ni kan frångå tabellformat om ni vill. Skapa direktlänkar till er kod där det är lämpligt.  -->
 
 ### Namngivning
 
 | Namn och förklaring  | Reflektion                                   |
 | -------------------  | ---------------------------------------------|
-|                      |                                              |
-|                      |                                              |
-|                      |                                              |
-|                      |                                              |
-|                      |                                              |
+| startTokenizer, metoden som startar Tokenizer.                     | **Use Intention-Revealing Names**, Metodnamnet består av två ord: start och tokenizer. Dessa två ord visar tydligt att avsikten är att starta tokenizer.  **Use Pronounceable names**. Metodnamnet använder sig av två engelska ord, vilket gör metodnamnet uttalbart.                                            |
+|    tokenizerResultTokens, Ett attribut i Tokenizer                 |       **Avoid Mental Mapping**, attributets namn berättar tydligt att den innehåller tokeniserarens resultat med ordet Result. Det blir därför tydligare för exempelvis andra programmerare att veta vad attributet innehåller.                                        |
+|    getBestTokenMatch, En metod i Tokenizer som returnerar det token som matchar bäst                  |      **Pick One Word per Concept**, Metodnamnet börjar med get, vilket indikerar att den returnerar något. Enligt namnet returneras bästa token matchningen. I modulen Tokenizer används endast get för att indikera att något för att få data, vilket gör det tydligare än att exempelvis blanda get, fetch och retrieve. **Pronounceable names**. Metodens namn innehåller endast riktiga ord, vilket gör namnet uttalbart.                     |
+|    Tokenizer, namnet på klassen som tokeniserar tokens.                  |      **Class Names**, namnet på en klass ska vara ett substantiv eller en substantivfras, vilket namnet Tokenizer uppfyller                                        |
+|    token, en variabel i metoden handleError i Tokenizer.                  |       **Use Intention-Revealing Names**, variabeln används för att skicka ett token som skapas i createLexicalErrorToken till metoden addToken på nästa rad. Ett bättre alternativ hade varit att ändra namnet till lexicalErrorToken eftersom det förklarar innehållet bättre.                                    |
 
 ### Funktioner
 
 | Metodnamn och förklaring  | Reflektion                                   |
 | -------------------  | ---------------------------------------------|
-|                      |                                              |
-|                      |                                              |
-|                      |                                              |
-|                      |                                              |
-|                      |                                              |
+|   createTokenTypeMatchObject(key, matchString), en metod som returnerar ett av två token objekt beroende på om värdet är en tom sträng eller inte i Tokenizer.                   | **Do One Thing**, Metoden gör en sak eftersom den skapar ett token objekt. **Function Arguments**, Metoden har två argument (dyadic), vilket är sämre än att ha ett argument. Eftersom båda argumenten krävs för att skapa objektet så är det ett undantag.                                      |
+|   getBestTokenMatch(), en metod i Tokenizer som returnerar det token som matchar bäst enligt regeln längst värde.                   |    **Do One Thing**, Metoden gör flera saker. Den skapar både ett token och letar upp det token som matchar bäst. Ett bättre alternativ hade varit att skapa ett token i en annan metod med hjälp av ett metodanrop. **One Level of Abstraction per Function**, Metoden skapar nåde ett objekt och anropar metoder. Det innebär att det finns både höga och låga abstraktionsnivåer i samma metod. En bättre lösning är att flytta ut skapandet av objektet till en separat metod.                                   |
+|  startTokenizer(), en metod som startar tokeniseraren i Tokenizer                    |    **One Level of Abstraction per Function**, Metoden anropar endast andra metoder utan några abstraktioner på en låg nivå.                                          |
+|   createAllTokens(), en metod i Tokenizer som skapar alla tokens.                   |  **Blocks And Indenting**, En while loop rekommenderas endast att ha ett metodanrop i blocket. While loopen i createAllTokens innehåller fem metodanrop. En bättre lösning hade varit att skapa en metod som heter createToken som loopen anropar varje iteration.                                            |
+|    getNextToken(), en metod i Tokenizer som hämtar nästa token och uppdaterar aktiv token                  |    **Have No Side Effects**, Metoden heter getNextToken men utöver att hämta nästa token så ändras även det token som är aktivt. Detta skapar en sidoeffekt. Däremot har jag valt att inte ändra metoden, eftersom två metodanrop (ändra till nästa token och hämta nästa token) skulle skapa sämre kod för den som använder klassen.                                          |
 
 ## Laborationsreflektion
-Reflektera över uppgiften utifrån ett kodkvalitetsperspektiv. Använd begrepp ifrån boken. 
+<!-- Reflektera över uppgiften utifrån ett kodkvalitetsperspektiv. Använd begrepp ifrån boken.  -->
