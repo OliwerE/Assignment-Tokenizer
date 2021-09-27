@@ -35,7 +35,7 @@ export class Tokenizer {
       this.trimCurrentString()
     }
     this.createEndToken()
-  }
+  } 
 
   matchAllTokenTypes() {
     this.resetPotentialTokens()
