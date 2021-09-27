@@ -65,7 +65,7 @@ Koden har testats med automatiska testfall i modulen tokenizerTests. Varje testf
 
 ### Resultat:
 
-![test](./img/test-result.png)
+![test](./img/test-result.PNG)
 
 <!-- Du kan tillföra kommentarer om din tokeniserare skiljer sig något från standard.  -->
 
