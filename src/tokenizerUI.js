@@ -56,10 +56,10 @@ export class TokenizerUI {
 
   handleNavigationInput(value) {
     if (value === 'next') {
-      this.tokenizer.getNextToken()
+      this.tokenizer.setNextActiveToken()
       this.handleActiveToken()
     } else if (value === 'prev') {
-      this.tokenizer.getPrevToken()
+      this.tokenizer.setPrevActiveToken()
       this.handleActiveToken()
     } else if (value === 'exit') {
       this.closeTokenizer()

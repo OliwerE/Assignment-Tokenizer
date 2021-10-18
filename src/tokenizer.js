@@ -141,25 +141,21 @@ export class Tokenizer {
     }
   }
 
-  getNextToken() {
+  setNextActiveToken() {
     const currentIndex = this.getCurrentTokenIndex()
     if (currentIndex >= this.tokenizerResultTokens.length - 1) {
       this.setActiveToken(this.tokenizerResultTokens[0])
-      return this.activeToken
     } else {
       this.setActiveToken(this.tokenizerResultTokens[currentIndex + 1])
-      return this.activeToken
     }
   }
 
-  getPrevToken() {
+  setPrevActiveToken() {
     const currentIndex = this.getCurrentTokenIndex()
     if (currentIndex === 0) {
       this.setActiveToken(this.tokenizerResultTokens[this.tokenizerResultTokens.length - 1])
-      return this.activeToken
     } else {
       this.setActiveToken(this.tokenizerResultTokens[currentIndex - 1])
-      return this.activeToken
     }
   }
 
