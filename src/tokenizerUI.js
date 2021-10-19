@@ -84,7 +84,7 @@ export class TokenizerUI {
   }
 
   renderToken(token) {
-    // console.clear()
+    console.clear()
     console.log(`Tokentyp: ${token.tokenType}\nVärde: ${token.value}`)
   }
 
