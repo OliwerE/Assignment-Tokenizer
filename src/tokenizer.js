@@ -5,6 +5,7 @@ export class Tokenizer {
     this.potentialTokens = []
     this.tokenizerResultTokens = []
     this.activeToken
+    this.activeTokenIndex = 0
     
   }
   startTokenizer(string) {
@@ -142,25 +143,23 @@ export class Tokenizer {
   }
 
   setNextActiveToken() {
-    const currentIndex = this.getCurrentTokenIndex()
-    if (currentIndex >= this.tokenizerResultTokens.length - 1) {
-      this.setActiveToken(this.tokenizerResultTokens[0])
+    if (this.activeTokenIndex >= this.tokenizerResultTokens.length - 1) {
+      this.activeTokenIndex = 0
+      this.setActiveToken(this.tokenizerResultTokens[this.activeTokenIndex])
     } else {
-      this.setActiveToken(this.tokenizerResultTokens[currentIndex + 1])
+      this.activeTokenIndex += 1
+      this.setActiveToken(this.tokenizerResultTokens[this.activeTokenIndex])
     }
   }
 
   setPrevActiveToken() {
-    const currentIndex = this.getCurrentTokenIndex()
-    if (currentIndex === 0) {
-      this.setActiveToken(this.tokenizerResultTokens[this.tokenizerResultTokens.length - 1])
+    if (this.activeTokenIndex === 0) {
+      this.activeTokenIndex = this.tokenizerResultTokens.length - 1
+      this.setActiveToken(this.tokenizerResultTokens[this.activeTokenIndex])
     } else {
-      this.setActiveToken(this.tokenizerResultTokens[currentIndex - 1])
+      this.activeTokenIndex -= 1
+      this.setActiveToken(this.tokenizerResultTokens[this.activeTokenIndex])
     }
-  }
-
-  getCurrentTokenIndex() {
-    return this.tokenizerResultTokens.findIndex(token => token.tokenType === this.activeToken.tokenType && token.value === this.activeToken.value)
   }
 
   setActiveToken(token) {
