@@ -48,14 +48,16 @@ const tokenizer = new Tokenizer(wordAndDotGrammar)
 
 console.log(tokenizer.getActiveToken())
 ```
-* För att läsa och ändra till nästa token:
+* För att ändra till nästa token:
 ```javascript
 import { Tokenizer } from './tokenizer.js'
 import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
 
 const tokenizer = new Tokenizer(wordAndDotGrammar)
 
-console.log(tokenizer.getNextToken())
+tokenizer.setNextActiveToken()
+
+console.log(tokenizer.getActiveToken())
 ```
 * För att läsa och ändra till förra token:
 ```javascript
@@ -64,7 +66,9 @@ import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
 
 const tokenizer = new Tokenizer(wordAndDotGrammar)
 
-console.log(tokenizer.getPrevToken())
+tokenizer.setPrevActiveToken()
+
+console.log(tokenizer.getActiveToken())
 ```
 
 ## TokenizerUI
@@ -74,7 +78,7 @@ console.log(tokenizer.getPrevToken())
 import { TokenizerUI } from './tokenizerUI.js'
 import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
 ```
-* Skapa en instans av TokenizerUI med gramamtiken som argument:
+* Skapa en instans av TokenizerUI med grammatiken som argument:
 ```javascript
 import { TokenizerUI } from './tokenizerUI.js'
 import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
