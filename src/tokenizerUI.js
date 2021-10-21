@@ -1,8 +1,8 @@
-import { Tokenizer } from "./tokenizer.js"
+import { ActiveToken } from "./activeToken.js"
 import readline from 'readline'
 
 export class TokenizerUI {
-  #tokenizer
+  #activeToken
   #string
   #inputReader = readline.createInterface({
     input: process.stdin,
@@ -12,7 +12,7 @@ export class TokenizerUI {
   #isRequestingStringFromUser = true
 
   constructor(grammar) {
-    this.#tokenizer = new Tokenizer(grammar)
+    this.#activeToken = new ActiveToken(grammar)
   }
 
   start() {
@@ -49,7 +49,7 @@ export class TokenizerUI {
   }
 
   #setupTokenizer() {
-    this.#tokenizer.startTokenizer(this.#string)
+    this.#activeToken.start(this.#string)
   }
 
   #startTokenUI() {
@@ -58,10 +58,10 @@ export class TokenizerUI {
 
   #handleNavigationInput(value) {
     if (value === 'next') {
-      this.#tokenizer.setNextActiveToken()
+      this.#activeToken.setNextActiveToken()
       this.#handleActiveToken()
     } else if (value === 'prev') {
-      this.#tokenizer.setPrevActiveToken()
+      this.#activeToken.setPrevActiveToken()
       this.#handleActiveToken()
     } else if (value === 'exit') {
       this.#closeTokenizer()
@@ -72,7 +72,7 @@ export class TokenizerUI {
   }
 
   #handleActiveToken() {
-    this.#renderToken(this.#tokenizer.getActiveToken())
+    this.#renderToken(this.#activeToken.getActiveToken())
     this.#readUserInput('Change token (next/prev/exit):')
   }
 

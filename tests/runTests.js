@@ -1,7 +1,8 @@
 import * as tokeniserTests from './tokenizerTests.js'
 
 const start = () => {
-console.table({ "TC1: första aktiv token": {
+
+  console.table({ "TC1: första aktiv token": {
     Grammatik: 'WordAndDotGrammar',
     Sträng: 'a',
     Sekvens: '[]',

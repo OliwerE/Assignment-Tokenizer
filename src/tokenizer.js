@@ -1,25 +1,24 @@
-import { Token } from "./Token.js"
+import { Token } from "./token.js"
 
 export class Tokenizer {
-  #grammar
   #string = ''
+  #grammar
   #potentialTokens = []
   #tokenizerResultTokens = []
-  #activeToken
-  #activeTokenIndex = 0
 
   constructor(grammar) {
     this.#grammar = grammar
   }
-  startTokenizer(string) {
+
+  start(inputString) {
     try {
-      this.#setString(string)
+      this.#setString(inputString)
       this.#trimCurrentString()
       this.#createAllTokens()
-      this.#setupActiveToken()
     } catch (err) {
       this.#handleError(err)
     }
+    return this.#tokenizerResultTokens
   }
 
   #setString(string) {
@@ -65,9 +64,9 @@ export class Tokenizer {
 
   #createTokenTypeMatchObject(key, matchString) {
     if (matchString === '') {
-      return new Token(key, null)      
+      return new Token(key, null)
     } else {
-      return new Token(key, matchString)    
+      return new Token(key, matchString)
     }
   }
 
@@ -78,7 +77,7 @@ export class Tokenizer {
   }
 
   #getBestTokenMatch() {
-    let bestMatchingToken = new Token('', '')
+    let bestMatchingToken = new Token(null, '')
     for (let i = 0; i < this.#potentialTokens.length; i++) {
       bestMatchingToken = this.#findBetterTokenMatch(this.#potentialTokens[i], bestMatchingToken)
     }
@@ -93,7 +92,7 @@ export class Tokenizer {
   }
 
   #handleLexicalError(token) {
-    if (token.getTokenType() === '' && token.getTokenValue() === '') {
+    if (token.getTokenType() === null && token.getTokenValue() === '') {
       throw new Error('Lexical Error')
     }
   }
@@ -111,15 +110,10 @@ export class Tokenizer {
     this.#addToken(endToken)
   }
 
-  #setupActiveToken() {
-    this.#setActiveToken(this.#tokenizerResultTokens[0])
-  }
-
   #handleError(err) {
     if (err.message === 'Lexical Error') {
       const token = this.#createLexicalErrorToken()
       this.#addToken(token)
-      this.#setupActiveToken()
     } else {
       console.log(err.message)
       process.exit(1)
@@ -128,33 +122,5 @@ export class Tokenizer {
 
   #createLexicalErrorToken() {
     return new Token('Lexical Error', `No lexical element matches "${this.#string}"`)
-  }
-
-  setNextActiveToken() {
-    if (this.#activeTokenIndex >= this.#tokenizerResultTokens.length - 1) {
-      this.#activeTokenIndex = 0
-      this.#setActiveToken(this.#tokenizerResultTokens[this.#activeTokenIndex])
-    } else {
-      this.#activeTokenIndex += 1
-      this.#setActiveToken(this.#tokenizerResultTokens[this.#activeTokenIndex])
-    }
-  }
-
-  setPrevActiveToken() {
-    if (this.#activeTokenIndex === 0) {
-      this.#activeTokenIndex = this.#tokenizerResultTokens.length - 1
-      this.#setActiveToken(this.#tokenizerResultTokens[this.#activeTokenIndex])
-    } else {
-      this.#activeTokenIndex -= 1
-      this.#setActiveToken(this.#tokenizerResultTokens[this.#activeTokenIndex])
-    }
-  }
-
-  #setActiveToken(token) {
-    this.#activeToken = token
-  }
-
-  getActiveToken() {
-    return this.#activeToken
   }
 }

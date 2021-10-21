@@ -1,10 +1,10 @@
-import { Tokenizer } from "../src/tokenizer.js"
+import { ActiveToken } from "../src/activeToken.js"
 import { wordAndDotGrammar } from '../src/grammars/wordAndDotGrammar.js'
 import { arithmeticGrammar } from '../src/grammars/arithmeticGrammar.js'
 
 export const tc1 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a')
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === 'a' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'WORD') {
     return true
   } else {
@@ -13,8 +13,8 @@ export const tc1 = () => {
 }
 
 export const tc2 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a aa')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a aa')
   wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === 'aa' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'WORD') {
     return true
@@ -24,8 +24,8 @@ export const tc2 = () => {
 }
 
 export const tc3 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a.b')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a.b')
   wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === '.' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'DOT') {
     return true
@@ -35,8 +35,8 @@ export const tc3 = () => {
 }
 
 export const tc4 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a.b')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a.b')
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === 'b' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'WORD') {
@@ -47,8 +47,8 @@ export const tc4 = () => {
 }
 
 export const tc5 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('aa. b')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('aa. b')
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === 'b' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'WORD') {
@@ -59,8 +59,8 @@ export const tc5 = () => {
 }
 
 export const tc6 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a .b')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a .b')
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setPrevActiveToken()
@@ -72,8 +72,8 @@ export const tc6 = () => {
 }
 
 export const tc7 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('')
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setPrevActiveToken()
@@ -85,8 +85,8 @@ export const tc7 = () => {
 }
 
 export const tc8 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer(' ')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start(' ')
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setNextActiveToken()
   wordAndDotTokenizer.setPrevActiveToken()
@@ -98,8 +98,8 @@ export const tc8 = () => {
 }
 
 export const tc9 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a')
   wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === '' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'END') {
     return true
@@ -109,8 +109,8 @@ export const tc9 = () => {
 }
 
 export const tc10 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('a')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('a')
   wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === '' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'END') {
     return true
@@ -120,8 +120,8 @@ export const tc10 = () => {
 }
 
 export const tc11 = () => {
-  const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
-  wordAndDotTokenizer.startTokenizer('!')
+  const wordAndDotTokenizer = new ActiveToken(wordAndDotGrammar)
+  wordAndDotTokenizer.start('!') // FEL HÄR
   wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().getTokenValue() === 'No lexical element matches "!"' && wordAndDotTokenizer.getActiveToken().getTokenType() === 'Lexical Error') {
     return true
@@ -131,8 +131,8 @@ export const tc11 = () => {
 }
 
 export const tc12 = () => {
-  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
-  arithmeticTokenizer.startTokenizer('3')
+  const arithmeticTokenizer = new ActiveToken(arithmeticGrammar)
+  arithmeticTokenizer.start('3')
   if (arithmeticTokenizer.getActiveToken().getTokenValue() === '3' && arithmeticTokenizer.getActiveToken().getTokenType() === 'NUMBER') {
     return true
   } else {
@@ -141,8 +141,8 @@ export const tc12 = () => {
 }
 
 export const tc13 = () => {
-  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
-  arithmeticTokenizer.startTokenizer('3.14')
+  const arithmeticTokenizer = new ActiveToken(arithmeticGrammar)
+  arithmeticTokenizer.start('3.14')
   if (arithmeticTokenizer.getActiveToken().getTokenValue() === '3.14' && arithmeticTokenizer.getActiveToken().getTokenType() === 'NUMBER') {
     return true
   } else {
@@ -151,8 +151,8 @@ export const tc13 = () => {
 }
 
 export const tc14 = () => {
-  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
-  arithmeticTokenizer.startTokenizer('3 + 54 * 4')
+  const arithmeticTokenizer = new ActiveToken(arithmeticGrammar)
+  arithmeticTokenizer.start('3 + 54 * 4')
   arithmeticTokenizer.setNextActiveToken()
   arithmeticTokenizer.setNextActiveToken()
   arithmeticTokenizer.setNextActiveToken()
@@ -164,8 +164,8 @@ export const tc14 = () => {
 }
 
 export const tc15 = () => {
-  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
-  arithmeticTokenizer.startTokenizer('3+5 # 4')
+  const arithmeticTokenizer = new ActiveToken(arithmeticGrammar)
+  arithmeticTokenizer.start('3+5 # 4')
   arithmeticTokenizer.setNextActiveToken()
   arithmeticTokenizer.setNextActiveToken()
   arithmeticTokenizer.setNextActiveToken()
@@ -177,8 +177,8 @@ export const tc15 = () => {
 }
 
 export const tc16 = () => {
-  const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
-  arithmeticTokenizer.startTokenizer('3.0+54.1     + 4.2')
+  const arithmeticTokenizer = new ActiveToken(arithmeticGrammar)
+  arithmeticTokenizer.start('3.0+54.1     + 4.2')
   arithmeticTokenizer.setNextActiveToken()
   arithmeticTokenizer.setPrevActiveToken()
   arithmeticTokenizer.setNextActiveToken()
@@ -190,5 +190,3 @@ export const tc16 = () => {
     return false
   }
 }
-
-
