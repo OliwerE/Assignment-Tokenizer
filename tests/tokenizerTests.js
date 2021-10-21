@@ -16,7 +16,7 @@ tc1()
 const tc2 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('a aa')
-  wordAndDotTokenizer.getNextToken()
+  wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === 'aa' && wordAndDotTokenizer.getActiveToken().tokenType === 'WORD') {
     console.log('TC2: PASS')
   } else {
@@ -28,7 +28,7 @@ tc2()
 const tc3 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('a.b')
-  wordAndDotTokenizer.getNextToken()
+  wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === '.' && wordAndDotTokenizer.getActiveToken().tokenType === 'DOT') {
     console.log('TC3: PASS')
   } else {
@@ -40,8 +40,8 @@ tc3()
 const tc4 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('a.b')
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getNextToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === 'b' && wordAndDotTokenizer.getActiveToken().tokenType === 'WORD') {
     console.log('TC4: PASS')
   } else {
@@ -53,8 +53,8 @@ tc4()
 const tc5 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('aa. b')
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getNextToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === 'b' && wordAndDotTokenizer.getActiveToken().tokenType === 'WORD') {
     console.log('TC5: PASS')
   } else {
@@ -66,9 +66,9 @@ tc5()
 const tc6 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('a .b')
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getPrevToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === '.' && wordAndDotTokenizer.getActiveToken().tokenType === 'DOT') {
     console.log('TC6: PASS')
   } else {
@@ -80,9 +80,9 @@ tc6()
 const tc7 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('')
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getPrevToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === '' && wordAndDotTokenizer.getActiveToken().tokenType === 'END') {
     console.log('TC7: PASS')
   } else {
@@ -94,9 +94,9 @@ tc7()
 const tc8 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer(' ')
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getNextToken()
-  wordAndDotTokenizer.getPrevToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setNextActiveToken()
+  wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === '' && wordAndDotTokenizer.getActiveToken().tokenType === 'END') {
     console.log('TC8: PASS')
   } else {
@@ -108,7 +108,7 @@ tc8()
 const tc9 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('a')
-  wordAndDotTokenizer.getNextToken()
+  wordAndDotTokenizer.setNextActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === '' && wordAndDotTokenizer.getActiveToken().tokenType === 'END') {
     console.log('TC9: PASS')
   } else {
@@ -120,7 +120,7 @@ tc9()
 const tc10 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('a')
-  wordAndDotTokenizer.getPrevToken()
+  wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === '' && wordAndDotTokenizer.getActiveToken().tokenType === 'END') {
     console.log('TC10: PASS')
   } else {
@@ -132,7 +132,7 @@ tc10()
 const tc11 = () => {
   const wordAndDotTokenizer = new Tokenizer(wordAndDotGrammar)
   wordAndDotTokenizer.startTokenizer('!')
-  wordAndDotTokenizer.getPrevToken()
+  wordAndDotTokenizer.setPrevActiveToken()
   if (wordAndDotTokenizer.getActiveToken().value === 'No lexical element matches "!"' && wordAndDotTokenizer.getActiveToken().tokenType === 'Lexical Error') {
     console.log('TC11: PASS')
   } else {
@@ -166,9 +166,9 @@ tc13()
 const tc14 = () => {
   const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
   arithmeticTokenizer.startTokenizer('3 + 54 * 4')
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
   if (arithmeticTokenizer.getActiveToken().value === '*' && arithmeticTokenizer.getActiveToken().tokenType === 'MUL') {
     console.log('TC14: PASS')
   } else {
@@ -180,9 +180,9 @@ tc14()
 const tc15 = () => {
   const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
   arithmeticTokenizer.startTokenizer('3+5 # 4')
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
   if (arithmeticTokenizer.getActiveToken().value === 'No lexical element matches "# 4"' && arithmeticTokenizer.getActiveToken().tokenType === 'Lexical Error') {
     console.log('TC15: PASS')
   } else {
@@ -194,11 +194,11 @@ tc15()
 const tc16 = () => {
   const arithmeticTokenizer = new Tokenizer(arithmeticGrammar)
   arithmeticTokenizer.startTokenizer('3.0+54.1     + 4.2')
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getPrevToken()
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getNextToken()
-  arithmeticTokenizer.getNextToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setPrevActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
+  arithmeticTokenizer.setNextActiveToken()
   if (arithmeticTokenizer.getActiveToken().value === '+' && arithmeticTokenizer.getActiveToken().tokenType === 'ADD') {
     console.log('TC16: PASS')
   } else {
