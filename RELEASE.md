@@ -46,26 +46,26 @@ Koden har testats med automatiska testfall i modulen tokenizerTests. Varje testf
 
 | Namn      | Grammatik | Sträng | Sekvens | Förväntat Aktivt Token | PASS/FAIL |
 | --------- | --------- | ------ | ------- | ------------ | --------- |
-|    TC1       |   WordAndDotGrammar        |  “a”      |   []      |     WORD(“a”)         |        PASS   |
-|    TC2      |   WordAndDotGrammar        |   “a aa”     |  [>]       |      WORD(“aa”)        |      PASS     |
-|   TC3        |  WordAndDotGrammar         |   “a.b”     |   [>]      |       DOT(“.”)       |      PASS     |
-|   TC4        |   WordAndDotGrammar        |  “a.b”    |   [>>]      |      **WORD(“b”)**        |    PASS       |
-|   TC5        |   WordAndDotGrammar        |  “aa. b”   |   **[>>]**      |     WORD(“b”)         |      PASS     |
-|   TC6        |   WordAndDotGrammar        |  “a .b”    |   [>><]      |       DOT(“.”)       |      PASS     |
-|   TC7        |   WordAndDotGrammar        |   “”    |     []    |       END       |      PASS     |
-|   TC8        |   WordAndDotGrammar        |   “ ”    |    []     |       **END**       |      PASS     |
-|   TC9        |   WordAndDotGrammar        |   “a”    |     **[>]**    |        END      |      PASS     |
-|   TC10        |  WordAndDotGrammar         |  “a”     |[<]|         **END**     |       PASS    |
-|   TC11        |  WordAndDotGrammar         |   “!”    |     []    |    Exception      |      PASS     |
-|   TC12        |  ArithmeticGrammar         |   “3”     |     []    |  NUMBER(“3”)   |     PASS      |
-|   TC13        |  ArithmeticGrammar         |   “3.14”     |   []      |    NUMBER()   |        PASS   |
-|   TC14        |  ArithmeticGrammar         |    “3 + 54 * 4”    |  [>>>]  |  MUL(“*”)  |   PASS     |
-|   TC15        |  ArithmeticGrammar         |   “3+5 # 4”     |[>>>]|   **LexicalError(“No lexical element matches "# 4"”)**   |      PASS     |
-|   TC16        |  ArithmeticGrammar         |“3.0+54.1     + 4.2”|[><>>>]|  **ADD(“+”)**  |    PASS       |
+|    TC1: första aktiv token       |   WordAndDotGrammar        |  “a”      |   []      |     WORD(“a”)         |        PASS   |
+|    TC2: andra aktiv token word      |   WordAndDotGrammar        |   “a aa”     |  [>]       |      WORD(“aa”)        |      PASS     |
+|   TC3: andra aktiv token dot        |  WordAndDotGrammar         |   “a.b”     |   [>]      |       DOT(“.”)       |      PASS     |
+|   TC4: tredje aktiv token word        |   WordAndDotGrammar        |  “a.b”    |   [>>]      |      **WORD(“b”)**        |    PASS       |
+|   TC5: tredje aktiv token word        |   WordAndDotGrammar        |  “aa. b”   |   **[>>]**      |     WORD(“b”)         |      PASS     |
+|   TC6: fjärde aktiv token dot        |   WordAndDotGrammar        |  “a .b”    |   [>><]      |       DOT(“.”)       |      PASS     |
+|   TC7: fjärde aktiv token end        |   WordAndDotGrammar        |   “”    |     []    |       END       |      PASS     |
+|   TC8: fjärde aktiv token end        |   WordAndDotGrammar        |   “ ”    |    []     |       **END**       |      PASS     |
+|   TC9: andra aktiv token end        |   WordAndDotGrammar        |   “a”    |     **[>]**    |        END      |      PASS     |
+|   TC10: Gå bakåt till end token        |  WordAndDotGrammar         |  “a”     |[<]|         **END**     |       PASS    |
+|   TC11: Gå bakåt till lexikalfel        |  WordAndDotGrammar         |   “!”    |     []    |    Exception      |      PASS     |
+|   TC12: Första aktiv token number        |  ArithmeticGrammar         |   “3”     |     []    |  NUMBER(“3”)   |     PASS      |
+|   TC13: Första aktiv token number        |  ArithmeticGrammar         |   “3.14”     |   []      |    NUMBER()   |        PASS   |
+|   TC14: Fjärde aktiv token mul        |  ArithmeticGrammar         |    “3 + 54 * 4”    |  [>>>]  |  MUL(“*”)  |   PASS     |
+|   TC15: Fjärde aktiv token lexikalfel        |  ArithmeticGrammar         |   “3+5 # 4”     |[>>>]|   **LexicalError(“No lexical element matches "# 4"”)**   |      PASS     |
+|   TC16: 6:e aktiv token add        |  ArithmeticGrammar         |“3.0+54.1     + 4.2”|[><>>>]|  **ADD(“+”)**  |    PASS       |
 
 ### Resultat:
 
-![test](./img/test-result.PNG)
+![test](./img/test-result-new.PNG)
 
 <!-- Du kan tillföra kommentarer om din tokeniserare skiljer sig något från standard.  -->
 
