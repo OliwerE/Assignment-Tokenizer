@@ -1,3 +1,5 @@
+import { Token } from "./Token.js"
+
 export class Tokenizer {
   #grammar
   #string = ''
@@ -33,7 +35,7 @@ export class Tokenizer {
       this.#matchAllTokenTypes()
       const token = this.#getBestTokenMatch()
       this.#addToken(token)
-      this.#removeTokenFromString(token.value)
+      this.#removeTokenFromString(token.getTokenValue())
       this.#trimCurrentString()
     }
     this.#addEndToken()
@@ -63,29 +65,20 @@ export class Tokenizer {
 
   #createTokenTypeMatchObject(key, matchString) {
     if (matchString === '') {
-      return {
-        tokenType: key,
-        value: null
-      }      
+      return new Token(key, null)      
     } else {
-      return {
-        tokenType: key,
-        value: matchString
-      }
+      return new Token(key, matchString)    
     }
   }
 
   #addIfPotentialToken(token) {
-    if(token.value !== null) {
+    if(token.getTokenValue() !== null) {
         this.#potentialTokens.push(token)
     }
   }
 
   #getBestTokenMatch() {
-    let bestMatchingToken = {
-      tokenType: null,
-      value: ''
-    }
+    let bestMatchingToken = new Token('', '')
     for (let i = 0; i < this.#potentialTokens.length; i++) {
       bestMatchingToken = this.#findBetterTokenMatch(this.#potentialTokens[i], bestMatchingToken)
     }
@@ -94,13 +87,13 @@ export class Tokenizer {
   }
 
   #findBetterTokenMatch(alternativeToken, bestMatchingToken) {
-    if (alternativeToken.value.length > bestMatchingToken.value.length) {
+    if (alternativeToken.getTokenValue().length > bestMatchingToken.getTokenValue().length) {
       return alternativeToken
     }
   }
 
   #handleLexicalError(token) {
-    if (token.tokenType === null && token.value === '') {
+    if (token.getTokenType() === '' && token.getTokenValue() === '') {
       throw new Error('Lexical Error')
     }
   }
@@ -114,10 +107,7 @@ export class Tokenizer {
   }
 
   #addEndToken() {
-    const endToken = {
-      tokenType: 'END',
-      value: ''
-    }
+    const endToken = new Token('END', '')
     this.#addToken(endToken)
   }
 
@@ -137,10 +127,7 @@ export class Tokenizer {
   }
 
   #createLexicalErrorToken() {
-    return {
-      tokenType: 'Lexical Error',
-      value: `No lexical element matches "${this.#string}"`
-    }
+    return new Token('Lexical Error', `No lexical element matches "${this.#string}"`)
   }
 
   setNextActiveToken() {

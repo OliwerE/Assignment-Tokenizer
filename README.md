@@ -46,7 +46,11 @@ import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
 
 const tokenizer = new Tokenizer(wordAndDotGrammar)
 
-console.log(tokenizer.getActiveToken())
+const activeToken = tokenizer.getActiveToken()
+const activeTokenType = activeToken.getTokenType()
+const activeTokenValue = activeToken.getTokenValue()
+
+console.log(activeTokenType + ', ' +  activeTokenValue)
 ```
 * För att ändra till nästa token:
 ```javascript
@@ -57,9 +61,13 @@ const tokenizer = new Tokenizer(wordAndDotGrammar)
 
 tokenizer.setNextActiveToken()
 
-console.log(tokenizer.getActiveToken())
+const activeToken = tokenizer.getActiveToken()
+const activeTokenType = activeToken.getTokenType()
+const activeTokenValue = activeToken.getTokenValue()
+
+console.log(activeTokenType + ', ' +  activeTokenValue)
 ```
-* För att läsa och ändra till förra token:
+* För att ändra till förra token:
 ```javascript
 import { Tokenizer } from './tokenizer.js'
 import { wordAndDotGrammar } from './grammars/wordAndDotGrammar.js'
